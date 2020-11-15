@@ -14,7 +14,10 @@ export class FindOrdersUseCase {
     if (params.description) {
       options = {
         where: {
-          description: params.description
+          description: {
+            operator: 'LIKE',
+            value: params.description
+          }
         }
       }
     }

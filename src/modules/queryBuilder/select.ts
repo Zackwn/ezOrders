@@ -9,8 +9,14 @@ export function buildFindQuery(options: FindOptions<any>) {
     whereClauseQuery.push(' WHERE ')
 
     for (let key in options.where) {
-      whereClauseQuery.push(`${key} = $${index}`, ' AND ')
-      whereClauseValues.push(options.where[key])
+      const operator = options.where[key].operator || "="
+      whereClauseQuery.push(`${key} ${operator} $${index}`, ' AND ')
+      const whereClauseValue = [options.where[key].value]
+      if (operator === "LIKE") {
+        whereClauseValue.unshift('%')
+        whereClauseValue.push('%')
+      }
+      whereClauseValues.push(whereClauseValue.join(''))
       index++
     }
 

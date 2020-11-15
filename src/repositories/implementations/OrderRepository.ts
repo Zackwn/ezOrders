@@ -21,7 +21,7 @@ export class OrderRepository implements IOrderRepository {
 
     const { query, values } = buildFindQuery(options)
 
-    console.log({ query })
+    console.log({ query, values })
 
     const orders = (await db.query<Order>(
       query, values
