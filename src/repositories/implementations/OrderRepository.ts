@@ -53,7 +53,7 @@ export class OrderRepository implements IOrderRepository {
     const finalQuery = [
       'SELECT ',
       `${selectedFiels.length >= 1
-        ? selectedFiels.join('')
+        ? `(${selectedFiels.join('')}) `
         : '* '
       }`,
       'FROM Orders',
