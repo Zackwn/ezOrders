@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { CreateOrderUseCase } from './CreateOrderUseCase'
-import { ICreateOrderDTO } from './ICreateOrderDTO'
 
 export class CreateOrderController {
   createOrderUseCase: CreateOrderUseCase
