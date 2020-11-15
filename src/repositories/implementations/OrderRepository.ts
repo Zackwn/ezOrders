@@ -1,6 +1,7 @@
 import { Order } from '../../entities/Order';
 import { IOrderRepository } from '../IOrderRepository'
 import { Pool } from 'pg'
+import { buildFindQuery } from '../../modules/queryBuilder/select';
 
 export class OrderRepository implements IOrderRepository {
   private connection: Pool
@@ -18,55 +19,12 @@ export class OrderRepository implements IOrderRepository {
   async find(options?: FindOptions<Order>) {
     const db = await this.connection.connect()
 
-    /* 
-      where clause example
-     "WHERE name = $1 AND age = $2"
-    */
+    const { query, values } = buildFindQuery(options)
 
-    let whereClauseQuery = []
-    const whereClauseValues = []
-
-    if (options?.where) {
-      let index = 1
-
-      whereClauseQuery.push(' WHERE ')
-
-      for (let key in options.where) {
-        whereClauseQuery.push(`${key} = $${index}`, ' AND ')
-        whereClauseValues.push(options.where[key])
-        index++
-      }
-
-      whereClauseQuery.length = whereClauseQuery.length - 1
-    }
-
-    const selectedFiels = []
-
-    if (options?.select) {
-      options.select.forEach(field => {
-        selectedFiels.push(field, ', ')
-      })
-
-      selectedFiels.length = selectedFiels.length - 1
-    }
-
-    const finalQuery = [
-      'SELECT ',
-      `${selectedFiels.length >= 1
-        ? `(${selectedFiels.join('')}) `
-        : '* '
-      }`,
-      'FROM Orders',
-      `${whereClauseQuery.length >= 1
-        ? whereClauseQuery.join('')
-        : ''
-      }`
-    ].join('')
-
-    console.log({ finalQuery })
+    console.log({ query })
 
     const orders = (await db.query<Order>(
-      finalQuery, whereClauseValues
+      query, values
     )).rows
 
     db.release()
