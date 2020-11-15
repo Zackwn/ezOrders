@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { CreateOrderUseCase } from './CreateOrderUseCase'
+import { ICreateOrderDTO } from './ICreateOrderDTO'
 
 export class CreateOrderController {
   createOrderUseCase: CreateOrderUseCase
@@ -19,9 +20,7 @@ export class CreateOrderController {
       table
     }
 
-    console.log(this)
     try {
-      console.log(this)
       await this.createOrderUseCase.execute(data)
     } catch (error) {
       console.log(error)
