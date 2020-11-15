@@ -2,6 +2,7 @@ import { Order } from '../../entities/Order';
 import { IOrderRepository } from '../IOrderRepository'
 import { Pool } from 'pg'
 import { buildFindQuery } from '../../modules/queryBuilder/select';
+import { buildUpdateQuery } from '../../modules/queryBuilder/update';
 
 export class OrderRepository implements IOrderRepository {
   private connection: Pool
@@ -55,7 +56,16 @@ export class OrderRepository implements IOrderRepository {
     db.release()
   }
 
-  async update(order: Order, id: Pick<Order, 'id'>) {
-    return {} as Order
+  async update(fields: UpdateOptions<Omit<Order, "id">>, id: string) {
+    const db = await this.connection.connect()
+
+    const { query, values } = buildUpdateQuery(fields, id)
+
+    console.log({ query, values })
+
+    const updatedOrder = (await db.query(query, values)).rows[0]
+
+    db.release()
+    return updatedOrder
   }
 }
