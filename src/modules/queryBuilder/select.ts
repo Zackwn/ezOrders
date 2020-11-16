@@ -1,5 +1,5 @@
 
-export function buildFindQuery(options: FindOptions<any>) {
+export function buildFindQuery(options?: FindOptions<any>) {
   let whereClauseQuery = []
   const whereClauseValues = []
 

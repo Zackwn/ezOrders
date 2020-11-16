@@ -15,7 +15,7 @@ declare global {
    * @param operator SQL Comparison Operators and "LIKE" Operator, default value is "="
    */
   type FindOptions<Entity> = {
-    where: {
+    where?: {
       [key in keyof Entity]?: {
         operator?: string = "="
         value: Entity[key]
