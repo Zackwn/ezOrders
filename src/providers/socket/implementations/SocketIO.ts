@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { ISocketIO } from './ISocketIO'
+import { ISocketIO } from '../ISocketIO'
 
 export class SocketIO implements ISocketIO {
   private socket: Server

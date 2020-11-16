@@ -1,1 +1,1 @@
-export { SocketIO } from './SocketIO'
+export { SocketIO } from './implementations/SocketIO'
