@@ -63,9 +63,8 @@ export class OrderRepository implements IOrderRepository {
 
     console.log({ query, values })
 
-    const updatedOrder = (await db.query(query, values)).rows[0]
+    await db.query(query, values)
 
     db.release()
-    return updatedOrder
   }
 }
