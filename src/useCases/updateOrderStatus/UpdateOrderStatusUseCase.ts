@@ -10,12 +10,16 @@ export class UpdateOrderStatusUseCase {
   }
 
   async execute(data: IUpdateOrderStatusDTO, socket: ISocketIO) {
-    const updatedOrder = await this.orderRepository.update({
+    await this.orderRepository.update({
       status: data.status
     }, data.id)
 
-    socket.send('changeOrderStatus', updatedOrder)
+    const order = await this.orderRepository.find({
+      where: { id: { value: data.id } }
+    })
 
-    return updatedOrder
+    socket.send('changeOrderStatus', order)
+
+    return order
   }
 } 
