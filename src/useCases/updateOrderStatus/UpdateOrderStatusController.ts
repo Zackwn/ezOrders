@@ -17,7 +17,7 @@ export class UpdateOrderStatusController {
       status: status as Status
     }
 
-    await this.updateOrderStatusUseCase.execute(data)
+    await this.updateOrderStatusUseCase.execute(data, req.socketIo)
 
     return res.send()
   }

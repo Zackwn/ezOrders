@@ -17,6 +17,6 @@ export class CreateOrderUseCase {
 
     await this.orderRepository.store(newOrder)
 
-    socket.send('newOrder', { message: 'New Order', order: newOrder })
+    socket.send('newOrder', newOrder)
   }
 }
