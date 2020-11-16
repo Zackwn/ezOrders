@@ -20,7 +20,7 @@ export class CreateOrderController {
     }
 
     try {
-      await this.createOrderUseCase.execute(data)
+      await this.createOrderUseCase.execute(data, req.socketIo)
     } catch (error) {
       console.log(error)
     }
