@@ -13,8 +13,6 @@ export class CreateOrderUseCase {
   async execute(data: ICreateOrderDTO, socket: ISocketIO) {
     const newOrder = new Order(data)
 
-    console.log({ newOrder })
-
     await this.orderRepository.store(newOrder)
 
     socket.send('newOrder', newOrder)
