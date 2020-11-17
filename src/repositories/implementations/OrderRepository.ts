@@ -3,18 +3,13 @@ import { IOrderRepository } from '../IOrderRepository'
 import { Pool } from 'pg'
 import { buildFindQuery } from '../../modules/queryBuilder/select';
 import { buildUpdateQuery } from '../../modules/queryBuilder/update';
+import { databaseConfig } from '../../constants';
 
 export class OrderRepository implements IOrderRepository {
   private connection: Pool
 
   constructor() {
-    this.connection = new Pool({
-      user: 'postgres',
-      host: 'localhost',
-      database: 'ezorders',
-      password: 'docker',
-      port: 5432,
-    })
+    this.connection = new Pool(databaseConfig)
   }
 
   async find(options?: FindOptions<Order>) {
